@@ -86,3 +86,48 @@ def test_assignment_resubmit_error(client, h_student_1):
     assert response.status_code == 400
     assert error_response['error'] == 'FyleError'
     assert error_response["message"] == 'only a draft assignment can be submitted'
+    
+
+#Added by me
+
+def test_create_assignment_invalid_data(client, h_student_1):
+    """
+    failure case: If invalid data is provided, the request should fail
+    """
+    response = client.post(
+        '/student/assignments',
+        headers=h_student_1,
+        json={
+            'content': 123  # Invalid content
+        })
+
+    assert response.status_code == 400  # Assuming your API returns 400 for bad requests
+
+def test_submit_nonexistent_assignment(client, h_student_1):
+    """
+    failure case: If an assignment does not exist, it cannot be submitted
+    """
+    response = client.post(
+        '/student/assignments/submit',
+        headers=h_student_1,
+        json={
+            'id': 9999,  # Assuming this ID does not exist
+            'teacher_id': 1
+        })
+
+    assert response.status_code == 404  # Assuming your API returns 404 for non-existent resources
+
+def test_submit_assignment_without_permission(client, h_teacher_1):
+    """
+    failure case: If a user without the necessary permissions tries to submit an assignment, the request should fail
+    """
+    response = client.post(
+        '/student/assignments/submit',
+        headers=h_teacher_1,  # Teacher trying to submit an assignment
+        json={
+            'id': 1,
+            'teacher_id': 1
+        })
+
+    assert response.status_code == 403  # Assuming your API returns 403 for forbidden actions
+

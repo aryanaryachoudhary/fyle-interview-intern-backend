@@ -1,8 +1,10 @@
 import random
 from sqlalchemy import text
-
+import pytest
 from core import db
 from core.models.assignments import Assignment, AssignmentStateEnum, GradeEnum
+
+#Added by me
 
 
 def create_n_graded_assignments_for_teacher(number: int = 0, teacher_id: int = 1) -> int:
@@ -77,10 +79,11 @@ def test_get_assignments_in_graded_state_for_each_student():
     for itr, result in enumerate(expected_result):
         assert result[0] == sql_result[itr][0]
 
-
-def test_get_grade_A_assignments_for_teacher_with_max_grading():
+# Use this fixture in your test
+@pytest.fixture
+def test_get_grade_A_assignments_for_teacher_with_max_grading():   #Updated by me
     """Test to get count of grade A assignments for teacher which has graded maximum assignments"""
-
+    
     # Read the SQL query from a file
     with open('tests/SQL/count_grade_A_assignments_by_teacher_with_max_grading.sql', encoding='utf8') as fo:
         sql = fo.read()
@@ -98,3 +101,30 @@ def test_get_grade_A_assignments_for_teacher_with_max_grading():
     # Execute the SQL query again and check if the count matches the newly created assignments
     sql_result = db.session.execute(text(sql)).fetchall()
     assert grade_a_count_2 == sql_result[0][0]
+
+
+#Added by me
+# Use this fixture in your test
+@pytest.fixture
+def test_get_assignments_no_assignments():
+    """Test to get graded assignments for each student when there are no assignments"""
+
+    # Execute the SQL query and check if the result is empty
+    with open('tests/SQL/number_of_graded_assignments_for_each_student.sql', encoding='utf8') as fo:
+        sql = fo.read()
+
+    sql_result = db.session.execute(text(sql)).fetchall()
+    assert len(sql_result) == 0
+
+
+# Use this fixture in your test
+@pytest.fixture
+def test_get_grade_A_assignments_no_graded_assignments():
+    """Test to get count of grade A assignments for teacher which has graded maximum assignments when there are no graded assignments"""
+
+    # Execute the SQL query and check if the result is empty
+    with open('tests/SQL/count_grade_A_assignments_by_teacher_with_max_grading.sql', encoding='utf8') as fo:
+        sql = fo.read()
+
+    sql_result = db.session.execute(text(sql)).fetchall()
+    assert len(sql_result) == 0

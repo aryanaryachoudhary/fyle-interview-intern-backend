@@ -1,0 +1,13 @@
+Run The FYLEHW flask app:
+Our main py file to be run is server.py stored in core folder
+So steps are:
+1. Code to be written in terminal:
+$env:FLASK_APP = "core\server.py"
+del .\core\store.sqlite3
+flask db upgrade -d core\migrations\
+
+2.
+.\run.bat
+
+The server would be running on http://127.0.0.1:8080
+  

@@ -1,0 +1,64 @@
+Added by me
+
+
+fylehw
+├── core
+│   ├── apis
+│   │   ├── assignments
+│   │   │   ├── __init__.py
+│   │   │   ├── principal.py
+│   │   │   ├── schema.py
+│   │   │   ├── student.py
+│   │   │   └── teacher.py
+│   │   ├── teachers
+│   │   │   ├── __init__.py
+│   │   │   ├── principal.py
+│   │   │   └── schema.py
+│   │   ├── __init__.py
+│   │   ├── decorators.py
+│   │   └── responses.py
+│   ├── libs
+│   │   ├── __init__.py
+│   │   ├── assertions.py
+│   │   ├── exceptions.py
+│   │   └── helpers.py
+│   ├── migrations
+│   │   ├── versions
+│   │   ├── README
+│   │   ├── alembic.ini
+│   │   ├── env.py
+│   │   └── script.py.mako
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── assignments.py
+│   │   ├── principals.py
+│   │   ├── students.py
+│   │   ├── teachers.py
+│   │   └── users.py
+│   ├── __init__.py
+│   ├── config.py
+│   ├── server.py
+│   └── tests
+│       ├── SQL
+│       │   ├── count_grade_A_assignments_by_teacher_with_max_grading.sql
+│       │   └── number_of_graded_assignments_for_each_student.sql
+│       ├── sql_test.py
+│       ├── __init__.py
+│       ├── conftest.py
+|       ├── exceptions_test.py
+│       ├── principals_test.py
+│       ├── students_test.py
+│       └── teachers_test.py
+├── .coveragerc
+├── .gitignore
+├── Application.md
+├── docker-compose.yml
+├── Dockerfile
+├── filestruct.txt
+├── README.md
+├── gunicorn_config.py
+├── pytest.ini
+├── requirements.txt
+├── run.bat
+└── runningtheserver.txt
+

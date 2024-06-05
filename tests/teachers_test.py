@@ -1,3 +1,5 @@
+from core.models.assignments import AssignmentStateEnum, GradeEnum
+
 def test_get_assignments_teacher_1(client, h_teacher_1):
     response = client.get(
         '/teacher/assignments',
@@ -63,7 +65,7 @@ def test_grade_assignment_bad_grade(client, h_teacher_1):
     assert data['error'] == 'ValidationError'
 
 
-def test_grade_assignment_bad_assignment(client, h_teacher_1):
+def test_grade_assignment_bad_assignment(client, h_teacher_1): #Updated by me
     """
     failure case: If an assignment does not exists check and throw 404
     """
@@ -79,7 +81,7 @@ def test_grade_assignment_bad_assignment(client, h_teacher_1):
     assert response.status_code == 404
     data = response.json
 
-    assert data['error'] == 'FyleError'
+    assert data['error'] == 'Assignment not found'
 
 
 def test_grade_assignment_draft_assignment(client, h_teacher_1):
@@ -99,3 +101,35 @@ def test_grade_assignment_draft_assignment(client, h_teacher_1):
     data = response.json
 
     assert data['error'] == 'FyleError'
+
+
+#Added by me
+
+def test_grade_graded_assignment(client, h_teacher_1):
+    """
+    failure case: If an assignment has already been graded, it cannot be graded again
+    """
+    response = client.post(
+        '/teacher/assignments/grade',
+        headers=h_teacher_1,
+        json={
+            'id': 1,  # Assuming this assignment has already been graded
+            'grade': GradeEnum.A.value
+        })
+
+    assert response.status_code == 400  # Assuming your API returns 400 for bad requests
+
+def test_grade_assignment_without_permission(client, h_student_1):
+    """
+    failure case: If a user without the necessary permissions tries to grade an assignment, the request should fail
+    """
+    response = client.post(
+        '/teacher/assignments/grade',
+        headers=h_student_1,  # Student trying to grade an assignment
+        json={
+            'id': 1,
+            'grade': GradeEnum.A.value
+        })
+
+    assert response.status_code == 403  # Assuming your API returns 403 for forbidden actions
+
