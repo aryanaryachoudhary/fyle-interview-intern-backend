@@ -2,9 +2,6 @@ import pytest
 from core.models.assignments import AssignmentStateEnum, GradeEnum
 
 
-
-
-
 def test_get_assignments(client, h_principal):
     response = client.get(
         '/principal/assignments',
@@ -20,7 +17,7 @@ def test_get_assignments(client, h_principal):
 
 
 
-# Use this fixture in your test
+
 @pytest.fixture
 def test_grade_assignment_draft_assignment(client, h_principal, setup_draft_assignment):
     """
@@ -29,7 +26,7 @@ def test_grade_assignment_draft_assignment(client, h_principal, setup_draft_assi
     response = client.post(
         '/principal/assignments/grade',
         json={
-            'id': 5,  # Ensure that assignment with id 5 is in DRAFT state in your test setup
+            'id': 5,  
             'grade': GradeEnum.A.value
         },
         headers=h_principal
@@ -85,7 +82,7 @@ def test_grade_nonexistent_assignment(client, h_principal):
         headers=h_principal
     )
 
-    assert response.status_code == 404  # Assuming your API returns 404 for non-existent resources
+    assert response.status_code == 404  
 
 def test_grade_assignment_invalid_grade(client, h_principal):
     """
@@ -95,12 +92,12 @@ def test_grade_assignment_invalid_grade(client, h_principal):
         '/principal/assignments/grade',
         json={
             'id': 1,
-            'grade': 'INVALID_GRADE'  # Invalid grade
+            'grade': 'INVALID_GRADE'  
         },
         headers=h_principal
     )
 
-    assert response.status_code == 400  # Assuming your API returns 400 for bad requests
+    assert response.status_code == 400  
 
 def test_grade_assignment_without_permission(client, h_student_1):
     """
@@ -112,7 +109,7 @@ def test_grade_assignment_without_permission(client, h_student_1):
             'id': 1,
             'grade': GradeEnum.A.value
         },
-        headers=h_student_1  # Student trying to grade an assignment
+        headers=h_student_1  
     )
 
-    assert response.status_code == 403  # Assuming your API returns 403 for forbidden actions
+    assert response.status_code == 403  

@@ -113,11 +113,11 @@ def test_grade_graded_assignment(client, h_teacher_1):
         '/teacher/assignments/grade',
         headers=h_teacher_1,
         json={
-            'id': 1,  # Assuming this assignment has already been graded
+            'id': 1,  
             'grade': GradeEnum.A.value
         })
 
-    assert response.status_code == 400  # Assuming your API returns 400 for bad requests
+    assert response.status_code == 400  
 
 def test_grade_assignment_without_permission(client, h_student_1):
     """
@@ -125,11 +125,11 @@ def test_grade_assignment_without_permission(client, h_student_1):
     """
     response = client.post(
         '/teacher/assignments/grade',
-        headers=h_student_1,  # Student trying to grade an assignment
+        headers=h_student_1, 
         json={
             'id': 1,
             'grade': GradeEnum.A.value
         })
 
-    assert response.status_code == 403  # Assuming your API returns 403 for forbidden actions
+    assert response.status_code == 403 
 

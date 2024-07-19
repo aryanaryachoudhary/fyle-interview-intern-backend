@@ -8,8 +8,6 @@ from core.libs import helpers
 from core.libs.exceptions import FyleError
 from werkzeug.exceptions import HTTPException
 from sqlalchemy.exc import IntegrityError
-#Added flasger for Swagger UI type interface much like FastAPI
-from flasgger import Swagger
 #Added other imports
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
